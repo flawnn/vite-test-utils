@@ -96,6 +96,7 @@ export interface TestOptions {
    * @default false
    */
   browser?: boolean
+  port?: string
   /**
    * The playwright browser options.
    */

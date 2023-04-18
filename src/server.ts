@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 
 import createDebug from 'debug'
 import { getRandomPort, waitForPort } from 'get-port-please'
-import { fetch as _fetch, $fetch as _$fetch } from 'ofetch'
+import { $fetch as _$fetch, fetch as _fetch } from 'ofetch'
 
 import { useTestContext } from './context'
 
@@ -39,7 +39,14 @@ export async function startServer() {
 
   await stopServer()
 
-  const port = (ctx.port = await getRandomPort())
+  let port
+
+  if (ctx.options.port == undefined) {
+    port = ctx.port = await getRandomPort()
+  } else {
+    ctx.port = port = Number.parseInt(ctx.options.port)
+  }
+
   ctx.url = `http://localhost:${port}`
   DEBUG(`ctx.url: ${ctx.url}`)
 
